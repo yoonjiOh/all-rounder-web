@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   margin: 0;
   font-family: "sofia", "suit";
@@ -14,6 +13,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
    */
   line-height: 1;
+  overflow: hidden;
+  touch-action: none;
 }
 
 .sb-main-padded.sb-show-main {
@@ -25,12 +26,12 @@ code {
     monospace;
 }
 
-.scrollbar {
+/* .scrollbar {
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-color: #2d4b9e transparent;
   scrollbar-width: thin;
-}
+} */
 
 .scrollbar::-webkit-scrollbar {
   width: 4px;
