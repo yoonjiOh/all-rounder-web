@@ -10,7 +10,7 @@ const MainContentWrapper: React.FC<MainContentWrapperProps> = ({
   return (
     <div className="h-screen flex">
       <SideBar />
-      <div>{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 };

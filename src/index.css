@@ -21,7 +21,7 @@ body {
    */
   line-height: 1;
   overflow: hidden;
-  touch-action: none;
+  /* touch-action: none; */
 }
 
 .sb-main-padded.sb-show-main {

@@ -7,7 +7,7 @@ const SideBar: React.FC<SideBarProps> = () => {
   const location = useLocation();
   const navigate = useCustomNavigate();
   return (
-    <div className="h-full flex flex-col space-y-12 bg-blue pt-170 w-220 text-18 font-semibold text-center">
+    <div className="h-full flex flex-col space-y-12 bg-slate-900 pt-170 w-300 text-18 font-semibold text-center">
       <div
         id="space"
         className={`items-center w-full text-white cursor-pointer`}
