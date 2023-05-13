@@ -26,12 +26,19 @@ interface IFormInput {
 }
 
 const ProfitAndLossInputForm: React.FC = () => {
-  const { register, getValues } = useForm<IFormInput>();
+  const { register, getValues, watch } = useForm<IFormInput>();
 
   const saveData = () => {
     const data = getValues();
     console.log(data);
   };
+
+  const grossProfit =
+    watch("revenue") - watch("producingCost") - watch("goodsSoldCost");
+  const operatingIncome =
+    grossProfit - watch("sellingCost") - watch("managementCost");
+  const preTaxNetIncome = operatingIncome + watch("otherOperatingIncome");
+  const netIncome = preTaxNetIncome - watch("incomeTax");
 
   return (
     <div className="h-screen w-full overflow-y-scroll">
@@ -67,7 +74,7 @@ const ProfitAndLossInputForm: React.FC = () => {
             </div>
           </Panel>
           <div className="bg-sky-500/30 h-46 flex items-center px-16 font-semibold">
-            <p>매출 총이익</p>
+            <p>매출 총이익 {grossProfit}</p>
           </div>
           <Panel header="판매비 * 일반 관리비" key="3">
             <div className="space-y-10">
@@ -84,7 +91,7 @@ const ProfitAndLossInputForm: React.FC = () => {
             </div>
           </Panel>
           <div className="bg-sky-500/30 h-46 flex items-center px-16 font-semibold">
-            <p>영업 이익</p>
+            <p>영업 이익 {operatingIncome}</p>
           </div>
           <Panel header="영업외 수익" key="4">
             <NumberInput
@@ -127,7 +134,7 @@ const ProfitAndLossInputForm: React.FC = () => {
           </Panel>
 
           <div className="bg-sky-500/30 h-46 flex items-center px-16 font-semibold">
-            <p>세전 당기순이익</p>
+            <p>세전 당기순이익 {preTaxNetIncome}</p>
           </div>
 
           <Panel header="법인세" key="9">
@@ -139,7 +146,7 @@ const ProfitAndLossInputForm: React.FC = () => {
           </Panel>
 
           <div className="bg-sky-500/30 h-46 flex items-center px-16 font-semibold">
-            <p>당기순이익</p>
+            <p>당기순이익 {netIncome}</p>
           </div>
         </Collapse>
       </form>
