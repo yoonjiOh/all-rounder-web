@@ -11,9 +11,9 @@ const SideBar: React.FC<SideBarProps> = () => {
       <div
         id="space"
         className={`items-center w-full text-white cursor-pointer`}
-        onClick={() => navigate("/profile-and-loss")}
+        onClick={() => navigate("/profile-and-loss/excel")}
       >
-        손익계산서
+        손익계산서 (엑셀)
       </div>
     </div>
   );
