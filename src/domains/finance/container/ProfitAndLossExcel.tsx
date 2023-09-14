@@ -1,12 +1,12 @@
 import FileUpload from "../component/FileUpload";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IMappingInfo } from "../types";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DraggableItem from "../component/DraggableItem";
 
-const ProfitAndLossExcel: React.FC = () => {
-  const [rawLedgerId, setRawLedgerId] = useState("");
+const ProfitAndLossExcel: React.FC<{ id: string | undefined }> = ({ id }) => {
+  const [rawLedgerId, setRawLedgerId] = useState(id);
   const [mappingInfo, setMappingInfo] = useState<IMappingInfo>({
     goodsSoldCost: [], // 상품 구매비용
     incomeTax: [], // 법인세비용
@@ -19,6 +19,19 @@ const ProfitAndLossExcel: React.FC = () => {
     specialCost: [], // 특별비용
     specialIncome: [], // 특별수익
   });
+
+  useEffect(() => {
+    /* rawLedgerId !== undefined 이면 rawLedgerId가 존재한다는 의미이다.
+      rawLedgerId가 존재하면 server 에서 rawLedgerId에 해당하는 mappingInfo 를 가져와서 setMappingInfo 한다.
+    */
+    if (rawLedgerId !== undefined) {
+      const fetchMappingInfo = async () => {
+        const response = await axios.get(`/raw-ledger/${rawLedgerId}`);
+        setMappingInfo(response.data.mappingInfo);
+      };
+      fetchMappingInfo();
+    }
+  }, []);
 
   const itemKrMap = {
     goodsSoldCost: "상품 구매비용",
@@ -58,19 +71,6 @@ const ProfitAndLossExcel: React.FC = () => {
 
   console.log({ mappingInfo });
 
-  const testData = {
-    revenue: ["Apple 매출", "Meta 매출"],
-    incomeTax: ["소득세"],
-    sellingCost: [],
-    specialCost: [],
-    goodsSoldCost: [],
-    producingCost: ["비용1", "비용2", "비용3"],
-    specialIncome: [],
-    managementCost: [],
-    nonOperatingCost: [],
-    nonOperatingIncome: [],
-  };
-
   const onDragEndHandler = (result: DropResult) => {
     const { destination, source, draggableId } = result;
     console.log("onDragEndHandler", destination, source);
@@ -96,8 +96,6 @@ const ProfitAndLossExcel: React.FC = () => {
 
     setMappingInfo(newMappingInfo);
   };
-
-  console.log(Object.keys(itemKrMap));
 
   return (
     <div className="h-screen w-full overflow-y-scroll">
@@ -130,7 +128,12 @@ const ProfitAndLossExcel: React.FC = () => {
         </div>
       </DragDropContext>
 
-      <button onClick={handleEditRawLedger}>손익계산서 필드값 변경 완료</button>
+      <button
+        className="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handleEditRawLedger}
+      >
+        손익계산서 필드값 변경 완료
+      </button>
     </div>
   );
 };

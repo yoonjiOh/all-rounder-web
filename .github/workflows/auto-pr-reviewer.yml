@@ -1,0 +1,21 @@
+name: Review Assign
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign:
+    name: Assign Reviewer
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }} # assign pull request author
+          reviewers: yoonjiOh
+          ready-comment: "코드 리뷰 요청합니다 🙆 <reviewers>"
+          merged-comment: "성공적으로 Merge 되었습니다. Shout out to <reviewers> :wink:"

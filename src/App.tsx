@@ -11,7 +11,7 @@ function App() {
           <Route path="/" element={<ProfileAndLossDirectPage />} />
           {/* 손익계산서 엑셀 입력 화면 */}
           <Route
-            path="/profile-and-loss/excel"
+            path="/profile-and-loss/excel/:id"
             element={<ProfitAndLossExcelPage />}
           />
         </Routes>
